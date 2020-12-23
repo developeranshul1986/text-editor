@@ -157,7 +157,7 @@ class _TextEditorState extends State<TextEditor> {
             Expanded(
               child: Row(
                 children: [
-                  FontSize(),
+//                   FontSize(),
                   Expanded(
                     child: Container(
                       child: Center(
