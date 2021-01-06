@@ -63,11 +63,11 @@ class FontOptionModel extends ChangeNotifier {
         : colors;
 
     // Set default picked color
-    // pickedColor = textStyleModel.textStyle?.color == null
-    //     ? colors[0]
-    //     : textStyleModel.textStyle.color;
+    pickedColor = textStyleModel.textStyle?.color == null
+        ? colors[0]
+        : textStyleModel.textStyle.color;
 
-        pickedColor = colors[0];
+        // pickedColor = colors[0];
   }
 
   void selectFontFamily(String value) {
@@ -84,9 +84,9 @@ class FontOptionModel extends ChangeNotifier {
 
   void pickColor(Color value) {
     // Set new text color
-    // textStyleModel.editTextColor(value);
+    textStyleModel.editTextColor(value);
 
-    backGroundModel.backGroundColor(value);
+    // backGroundModel.backGroundColor(value);
     // Update picked color
     pickedColor = value;
   }
