@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text_editor/src/background_model.dart';
 import 'package:text_editor/src/text_style_model.dart';
 
 class ColorPalette extends StatefulWidget {
@@ -19,13 +20,13 @@ class _ColorPaletteState extends State<ColorPalette> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            Consumer<TextStyleModel>(
-              builder: (context, textStyleModel, child) => Container(
+            Consumer<BackGroundModel>(
+              builder: (context, backGroundModel, child) => Container(
                 width: 40,
                 height: 40,
                 margin: EdgeInsets.only(right: 7),
                 decoration: BoxDecoration(
-                  color: textStyleModel.textStyle.color,
+                  color: backGroundModel.color,
                   border: Border.all(color: Colors.white, width: 1.5),
                   borderRadius: BorderRadius.circular(100),
                 ),
@@ -52,11 +53,11 @@ class _ColorPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyleModel textStyleModel =
-        Provider.of<TextStyleModel>(context, listen: false);
+    BackGroundModel backGroundModel =
+        Provider.of<BackGroundModel>(context, listen: false);
 
     return GestureDetector(
-      onTap: () => textStyleModel.editTextColor(color),
+      onTap: () => backGroundModel.backGroundColor(color),
       child: Container(
         width: 40,
         height: 40,
