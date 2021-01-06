@@ -2,6 +2,7 @@ library text_editor;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:text_editor/src/background_model.dart';
 import 'package:text_editor/src/font_option_model.dart';
 import 'package:text_editor/src/text_style_model.dart';
 import 'package:text_editor/src/widget/color_palette.dart';
@@ -76,6 +77,7 @@ class TextEditor extends StatefulWidget {
 class _TextEditorState extends State<TextEditor> {
   TextStyleModel _textStyleModel;
   FontOptionModel _fontOptionModel;
+  BackGroundModel _backGroundModel;
   Widget _doneButton;
 
   @override
@@ -85,9 +87,11 @@ class _TextEditorState extends State<TextEditor> {
       widget.textStyle == null ? TextStyle() : widget.textStyle,
       widget.textAlingment == null ? TextAlign.center : widget.textAlingment,
     );
+    _backGroundModel = BackGroundModel(widget.backgroundColor);
     _fontOptionModel = FontOptionModel(
       _textStyleModel,
       widget.fonts,
+      _backGroundModel,
       colors: widget.paletteColors,
     );
 
@@ -113,88 +117,92 @@ class _TextEditorState extends State<TextEditor> {
       providers: [
         ChangeNotifierProvider(create: (context) => _textStyleModel),
         ChangeNotifierProvider(create: (context) => _fontOptionModel),
+        ChangeNotifierProvider(create: (context) => _backGroundModel),
       ],
-      child: Container(
-        padding: EdgeInsets.only(right: 10, left: 10),
-        color: widget.backgroundColor,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(child: Container()),
-                Expanded(
-                  flex: 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextAlignment(
-                        left: widget.decoration?.alignment?.left,
-                        center: widget.decoration?.alignment?.center,
-                        right: widget.decoration?.alignment?.right,
-                      ),
-                      SizedBox(width: 20),
-                      FontOptionSwitch(
-                        fontFamilySwitch: widget.decoration?.fontFamily,
-                        colorPaletteSwitch: widget.decoration?.colorPalette,
-                      ),
-                      // TODO: Add text background color
-                      // SizedBox(width: 20),
-                      // TextBackgroundColor(),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: _editCompleteHandler,
-                      child: _doneButton,
+      child: Consumer<BackGroundModel>(builder: (context, _backGroundModel, child) {
+        return Container(
+          padding: EdgeInsets.only(right: 10, left: 10),
+          color: _backGroundModel.color,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(child: Container()),
+                  Expanded(
+                    flex: 3,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextAlignment(
+                          left: widget.decoration?.alignment?.left,
+                          center: widget.decoration?.alignment?.center,
+                          right: widget.decoration?.alignment?.right,
+                        ),
+                        SizedBox(width: 20),
+                        FontOptionSwitch(
+                          fontFamilySwitch: widget.decoration?.fontFamily,
+                          colorPaletteSwitch: widget.decoration?.colorPalette,
+                        ),
+                        // TODO: Add text background color
+                        // SizedBox(width: 20),
+                        // TextBackgroundColor(),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Row(
-                children: [
-//                   FontSize(),
                   Expanded(
-                    child: Container(
-                      child: Center(
-                        child: Consumer<TextStyleModel>(
-                          builder: (context, textStyleModel, child) {
-                            return TextField(
-                              controller: TextEditingController()
-                                ..text = textStyleModel.text,
-                              onChanged: (value) => textStyleModel.text = value,
-                              maxLines: null,
-                              keyboardType: TextInputType.multiline,
-                              style: textStyleModel.textStyle,
-                              textAlign: textStyleModel.textAlign,
-                              autofocus: true,
-                              cursorColor: Colors.white,
-                              decoration: null,
-                            );
-                          },
-                        ),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: _editCompleteHandler,
+                        child: _doneButton,
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 5),
-              child: Consumer<FontOptionModel>(
-                builder: (context, model, child) =>
-                    model.status == FontOptionStatus.fontFamily
-                        ? FontFamily(model.fonts)
-                        : ColorPalette(model.colors),
+              Expanded(
+                child: Row(
+                  children: [
+//                   FontSize(),
+                    Expanded(
+                      child: Container(
+                        child: Center(
+                          child: Consumer<TextStyleModel>(
+                            builder: (context, textStyleModel, child) {
+                              return TextField(
+                                controller: TextEditingController()
+                                  ..text = textStyleModel.text,
+                                onChanged: (value) =>
+                                    textStyleModel.text = value,
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
+                                style: textStyleModel.textStyle,
+                                textAlign: textStyleModel.textAlign,
+                                autofocus: true,
+                                cursorColor: Colors.white,
+                                decoration: null,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+              Container(
+                margin: EdgeInsets.only(bottom: 5),
+                child: Consumer<FontOptionModel>(
+                  builder: (context, model, child) =>
+                      model.status == FontOptionStatus.fontFamily
+                          ? FontFamily(model.fonts)
+                          : ColorPalette(model.colors),
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

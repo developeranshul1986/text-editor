@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:text_editor/src/background_model.dart';
 import 'package:text_editor/src/text_style_model.dart';
 
 enum FontOptionStatus { colorPalette, fontFamily }
@@ -13,6 +14,7 @@ class FontFamilyModel {
 
 class FontOptionModel extends ChangeNotifier {
   final TextStyleModel textStyleModel;
+  final BackGroundModel backGroundModel;
   FontOptionStatus status = FontOptionStatus.fontFamily;
 
   // Font family options
@@ -23,7 +25,7 @@ class FontOptionModel extends ChangeNotifier {
   List<Color> colors;
   Color pickedColor;
 
-  FontOptionModel(this.textStyleModel, List<String> fonts, {this.colors}) {
+  FontOptionModel(this.textStyleModel, List<String> fonts, this.backGroundModel, {this.colors}) {
     // Set default selected font
     selectedFont =
         selectedFont == null ? fonts[0] : textStyleModel.textStyle.fontFamily;
@@ -61,9 +63,11 @@ class FontOptionModel extends ChangeNotifier {
         : colors;
 
     // Set default picked color
-    pickedColor = textStyleModel.textStyle?.color == null
-        ? colors[0]
-        : textStyleModel.textStyle.color;
+    // pickedColor = textStyleModel.textStyle?.color == null
+    //     ? colors[0]
+    //     : textStyleModel.textStyle.color;
+
+        pickedColor = colors[0];
   }
 
   void selectFontFamily(String value) {
@@ -80,8 +84,9 @@ class FontOptionModel extends ChangeNotifier {
 
   void pickColor(Color value) {
     // Set new text color
-    textStyleModel.editTextColor(value);
+    // textStyleModel.editTextColor(value);
 
+    backGroundModel.backGroundColor(value);
     // Update picked color
     pickedColor = value;
   }
