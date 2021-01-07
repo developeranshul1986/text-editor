@@ -18,7 +18,7 @@ import 'package:text_editor/src/widget/text_alignment.dart';
 /// and then get the edited text style
 class TextEditor extends StatefulWidget {
   /// After edit process completed, [onEditCompleted] callback will be called.
-  final void Function(TextStyle, TextAlign, String) onEditCompleted;
+  final void Function(TextStyle, TextAlign, String, Color) onEditCompleted;
 
   /// [onTextAlignChanged] will be called after [textAlingment] prop has changed
   final ValueChanged<TextAlign> onTextAlignChanged;
@@ -108,6 +108,7 @@ class _TextEditorState extends State<TextEditor> {
       _textStyleModel.textStyle,
       _textStyleModel.textAlign,
       _textStyleModel.text,
+      _backGroundModel.color,
     );
   }
 
