@@ -164,7 +164,7 @@ _backGroundModel = BackGroundModel(widget.backgroundColor);
               Expanded(
                 child: Row(
                   children: [
-//                   FontSize(),
+                  FontSize(),
                     Expanded(
                       child: Container(
                         child: Center(
