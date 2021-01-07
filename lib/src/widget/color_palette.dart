@@ -20,13 +20,13 @@ class _ColorPaletteState extends State<ColorPalette> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            Consumer<BackGroundModel>(
-              builder: (context, backGroundModel, child) => Container(
+            Consumer<TextStyleModel>(
+              builder: (context, textStyleModel, child) => Container(
                 width: 40,
                 height: 40,
                 margin: EdgeInsets.only(right: 7),
                 decoration: BoxDecoration(
-                  color: backGroundModel.color,
+                  color: textStyleModel.textStyle.color,
                   border: Border.all(color: Colors.white, width: 1.5),
                   borderRadius: BorderRadius.circular(100),
                 ),
@@ -53,11 +53,11 @@ class _ColorPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BackGroundModel backGroundModel =
-        Provider.of<BackGroundModel>(context, listen: false);
+    TextStyleModel textStyleModel =
+        Provider.of<TextStyleModel>(context, listen: false);
 
     return GestureDetector(
-      onTap: () => backGroundModel.backGroundColor(color),
+      onTap: () => textStyleModel.editTextColor(color),
       child: Container(
         width: 40,
         height: 40,
