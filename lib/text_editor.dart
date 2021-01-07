@@ -94,7 +94,7 @@ class _TextEditorState extends State<TextEditor> {
       _backGroundModel,
       colors: widget.paletteColors,
     );
-_backGroundModel = BackGroundModel(widget.backgroundColor);
+    _backGroundModel = BackGroundModel(widget.backgroundColor);
     // Initialize decorator
     _doneButton = widget.decoration?.doneButton == null
         ? Text('Done', style: TextStyle(color: Colors.white))
@@ -120,8 +120,10 @@ _backGroundModel = BackGroundModel(widget.backgroundColor);
         ChangeNotifierProvider(create: (context) => _fontOptionModel),
         ChangeNotifierProvider(create: (context) => _backGroundModel),
       ],
-      child: Consumer<BackGroundModel>(builder: (context, _backGroundModel, child) {
-        return Container(
+      child: 
+      // Consumer<BackGroundModel>(builder: (context, _backGroundModel, child) {
+      //   return 
+        Container(
           padding: EdgeInsets.only(right: 10, left: 10),
           color: _backGroundModel.color,
           child: Column(
@@ -164,7 +166,7 @@ _backGroundModel = BackGroundModel(widget.backgroundColor);
               Expanded(
                 child: Row(
                   children: [
-                  FontSize(),
+//                   FontSize(),
                     Expanded(
                       child: Container(
                         child: Center(
@@ -202,8 +204,9 @@ _backGroundModel = BackGroundModel(widget.backgroundColor);
               ),
             ],
           ),
-        );
-      }),
+      //   );
+      // }
+      ),
     );
   }
 }
