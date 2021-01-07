@@ -87,14 +87,14 @@ class _TextEditorState extends State<TextEditor> {
       widget.textStyle == null ? TextStyle() : widget.textStyle,
       widget.textAlingment == null ? TextAlign.center : widget.textAlingment,
     );
-    _backGroundModel = BackGroundModel(widget.backgroundColor);
+    
     _fontOptionModel = FontOptionModel(
       _textStyleModel,
       widget.fonts,
       _backGroundModel,
       colors: widget.paletteColors,
     );
-
+_backGroundModel = BackGroundModel(widget.backgroundColor);
     // Initialize decorator
     _doneButton = widget.decoration?.doneButton == null
         ? Text('Done', style: TextStyle(color: Colors.white))
