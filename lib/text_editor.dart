@@ -121,9 +121,8 @@ class _TextEditorState extends State<TextEditor> {
         ChangeNotifierProvider(create: (context) => _backGroundModel),
       ],
       child: 
-      // Consumer<BackGroundModel>(builder: (context, _backGroundModel, child) {
-      //   return 
-        Container(
+      Consumer<BackGroundModel>(builder: (context, _backGroundModel, child) {
+        return Container(
           padding: EdgeInsets.only(right: 10, left: 10),
           color: _backGroundModel.color,
           child: Column(
@@ -204,9 +203,8 @@ class _TextEditorState extends State<TextEditor> {
               ),
             ],
           ),
-      //   );
-      // }
-      ),
+        );
+      }),
     );
   }
 }
